@@ -10,7 +10,7 @@ import (
 // up Stream 缓存
 // 由于是并行连接，所以不会出现延迟。缓存只是为了降低线路及目标望着你的负担。
 
-const cacheTimeout = 15 * time.Minute
+const cacheTimeout = 30 * time.Second
 
 // 保存连接耗时缓存
 // 每一个ip、代理一个
@@ -50,7 +50,7 @@ type upStreamConnCache struct {
 
 func NewUpStreamConnCache(errCheck ErrCheck) *upStreamConnCache {
 	c := upStreamConnCache{}
-	c.domains = lru.New(200)
+	c.domains = lru.New(2000)
 	c.errCheck = errCheck
 	return &c
 }

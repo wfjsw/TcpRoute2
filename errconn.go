@@ -24,7 +24,7 @@ import (
 
 */
 
-const ErrConnLogTimeOut = 30 * time.Minute // 超过这个期限的错误日志会被删除
+const ErrConnLogTimeOut = 60 * time.Minute // 超过这个期限的错误日志会被删除
 
 const (
 	ErrConnTypeReset ErrConnType = 1 // 连接被重置
@@ -65,7 +65,7 @@ type ErrConnService struct {
 
 func NewErrConnService() *ErrConnService {
 	res := ErrConnService{}
-	res.lru = lru.New(100)
+	res.lru = lru.New(1000)
 	return &res
 }
 
@@ -120,12 +120,12 @@ func (ec*ErrConnService)Check(dialName, domainAddr, ipAddr string) bool {
 		d.refresh()
 	}
 
-	if d.cache.dial[dialName] >= 5 {
+	if d.cache.dial[dialName] >= 1 {
 		fmt.Printf("%v 的 %v 线路的尝试连接IP %v ，由于线路属于经常故障线路，忽略本连接。\r\n", domainAddr, dialName, ipAddr)
 		return false
 	}
 
-	if d.cache.ipAddr[ipAddr] >= 2 {
+	if d.cache.ipAddr[ipAddr] >= 1 {
 		fmt.Printf("%v 的 %v 线路的尝试连接IP %v ，由于ip属于经常故障ip，忽略本连接。\r\n", domainAddr, dialName, ipAddr)
 		return false
 	}

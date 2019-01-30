@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	handlerTimeoutHello = 10 * time.Second// 握手 timeout 鉴定 + 接受 CMD 的总允许时间
-	handlerTimeoutConnect = 10 * time.Second// 连接目标地址超时
-	handlerTimeoutForward = 5 * time.Minute// 转发超时 每次转发数据都会重置这个超时时间
+	handlerTimeoutHello = 3 * time.Second// 握手 timeout 鉴定 + 接受 CMD 的总允许时间
+	handlerTimeoutConnect = 2 * time.Second// 连接目标地址超时
+	handlerTimeoutForward = 10 * time.Minute// 转发超时 每次转发数据都会重置这个超时时间
 )
 
 const (
